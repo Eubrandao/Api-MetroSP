@@ -12,12 +12,24 @@ export class ConnectionService {
         return session
     }
 
-    async read() {
+    async readAll() {
         const result = await (await this.getSession()).run('MATCH (n:MetroStation) RETURN n.name AS name ORDER BY n.name')
             console.log(result.records[0])
             const count = JSON.stringify(result.records)
 
-        return `Hello World! There are${count} nodes in the database`;
+        return count;
     }
-    
+
+    async calcJourney(data) {
+        let startNode = JSON.stringify(data.startNode).replace(/[^\w\s]/gi, '');
+        let endNode =   JSON.stringify(data.endNode).replace(/[^\w\s]/gi, '');
+        return await (await this.getSession()).run(
+            `MATCH (start:MetroStation {name: '${startNode}'}), (end:MetroStation {name: '${endNode}'})
+        CALL apoc.algo.dijkstra(start, end, 'TRAVEL_TO', 'time', 1) YIELD path, weight
+        RETURN path, weight`
+        )
+      
+    }
+
 }
+

@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Body, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ConnectionService } from './neo4j/connection.service';
 
@@ -11,8 +11,8 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('/journey')
-  async getTeste(): Promise<string> {
-    return this.connectionService.read()
+  @Post('/journey')
+    getJourney(@Body()data:string):any{
+    return  this.connectionService.calcJourney(data)
   }
 }
