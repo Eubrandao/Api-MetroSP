@@ -1,10 +1,10 @@
 import { Controller, Get, Body, Post } from '@nestjs/common';
 import { AppService } from './app.service';
-import { ConnectionService } from './neo4j/connection.service';
+import { JourneyService } from './journey/journey.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService, private readonly connectionService: ConnectionService) {}
+  constructor(private readonly appService: AppService, private readonly journeyService: JourneyService) {}
 
   @Get()
   getHello(): string {
@@ -13,6 +13,6 @@ export class AppController {
 
   @Post('/journey')
     getJourney(@Body()data:string):any{
-    return  this.connectionService.calcJourney(data)
+    return  this.journeyService.calcJourney(data)
   }
 }

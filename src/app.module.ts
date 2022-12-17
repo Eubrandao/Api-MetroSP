@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConnectionService } from './neo4j/connection.service';
+import { JourneyService } from './journey/journey.service';
 
 @Module({
   imports: [],
   controllers: [AppController],
-  providers: [AppService, ConnectionService],
+  providers: [AppService, JourneyService],
 })
 export class AppModule {}
