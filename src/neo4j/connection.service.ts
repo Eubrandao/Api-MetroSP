@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import neo4j from 'neo4j-driver';
+import { neo4jInterface } from 'src/repository/neo4j.interface';
 
 
 @Injectable()
-export class ConnectionService {
+export class ConnectionService implements neo4jInterface {
+    
    
     async getSession() {
         const driver = neo4j.driver(process.env.URI, neo4j.auth.basic(process.env.USER, process.env.PASSWORD))
